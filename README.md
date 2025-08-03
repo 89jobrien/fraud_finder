@@ -55,7 +55,7 @@ pip install -e .
 Train the final model and save the serialized artifacts (`model.joblib` and `scaler.joblib`):
 
 ```bash
-python build.py
+python build_model.py
 ```
 
 ### Option 2: Run the Interactive App
