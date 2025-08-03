@@ -56,11 +56,12 @@ def train_model(X_train, y_train):
     rand_search = RandomizedSearchCV(
         model,  # type:ignore
         param_distributions=param_dist,
-        n_iter=100,  # Increased from 10 to 50 for a more thorough search
-        cv=3,
+        n_iter=50,  # Increased from 10 to 50 for a more thorough search
+        cv=5,
         scoring='average_precision',
         random_state=42,
         n_jobs=-1,
+        refit=True,
         return_train_score=True
     )
     

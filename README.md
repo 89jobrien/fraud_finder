@@ -15,12 +15,12 @@ Detecting fraudulent transactions in real-world banking data is a vital, high-im
 
 ## Results
 
-- **Fraud Precision**: `0.94`
-- **Fraud Recall**: `0.83`
-- **AUPRC**: `0.87`
+- **Fraud Precision**: `1.00`
+- **Fraud Recall**: `0.82`
+- **AUPRC**: `0.8556`
 ![Model Evaluation](public/model_eval.png)
 
-These metrics reflect a model that flags fraudulent activity accurately and with minimal false positives—a critical requirement for real-world fraud detection systems.
+Our best LightGBM model achieves perfect precision (1.00) for fraud detection and a recall of 0.82, with an AUPRC of 0.8556 which is generally considered exceptional for such an imbalanced domain. This means the model reliably catches fraudulent transactions with virtually zero false alarms.
 
 
 

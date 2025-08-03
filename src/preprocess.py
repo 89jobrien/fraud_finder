@@ -1,8 +1,6 @@
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-# imblearn is no longer needed in this file
+from sklearn.preprocessing import RobustScaler
 
 def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
     """Creates new features from existing ones."""
@@ -15,8 +13,8 @@ def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
 
 def load_and_preprocess_data(file_path: str):
     """
-    Loads, engineers, scales, and splits the data.
-    Does NOT perform any sampling.
+    Loads, engineers, and scales the full dataset.
+    Returns: The full X, y, and the fitted scaler.
     """
     df = pd.read_csv(file_path)
     df = engineer_features(df)
@@ -24,16 +22,11 @@ def load_and_preprocess_data(file_path: str):
     X = df.drop('Class', axis=1)
     y = df['Class']
     
-    scaler = StandardScaler()
+    scaler = RobustScaler()
     X_scaled = scaler.fit_transform(X)
     X = pd.DataFrame(X_scaled, columns=X.columns)
-
-    # Split and return the original, imbalanced data
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42, stratify=y
-    )
     
-    return X_train, X_test, y_train, y_test
+    return X, y, scaler
 
 # def load_and_preprocess_data(file_path: str):
 #     """
