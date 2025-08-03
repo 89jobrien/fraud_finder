@@ -1,8 +1,9 @@
 import pandas as pd
 import numpy as np
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import RobustScaler
 
-def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
+def _engineer_features(df: pd.DataFrame) -> pd.DataFrame:
     """Creates new features from existing ones."""
     df['log_amount'] = np.log1p(df['Amount'])
     seconds_in_day = 24 * 60 * 60
@@ -11,13 +12,13 @@ def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
     df = df.drop(['Time', 'Amount'], axis=1)
     return df
 
-def load_and_preprocess_data(file_path: str):
+def get_processed_data(file_path: str):
     """
     Loads, engineers, and scales the full dataset.
     Returns: The full X, y, and the fitted scaler.
     """
     df = pd.read_csv(file_path)
-    df = engineer_features(df)
+    df = _engineer_features(df)
     
     X = df.drop('Class', axis=1)
     y = df['Class']
@@ -28,26 +29,13 @@ def load_and_preprocess_data(file_path: str):
     
     return X, y, scaler
 
-# def load_and_preprocess_data(file_path: str):
-#     """
-#     Loads data, engineers features, scales data, splits into train/test sets,
-#     and then applies undersampling only to the training data.
-#     """
-#     df = pd.read_csv(file_path)
-#     df = engineer_features(df)
+def get_train_test_split(file_path: str):
+    """
+    Processes the data and returns a train/test split.
+    """
+    X, y, _ = get_processed_data(file_path)
     
-#     X = df.drop('Class', axis=1)
-#     y = df['Class']
-    
-#     scaler = StandardScaler()
-#     X_scaled = scaler.fit_transform(X)
-#     X = pd.DataFrame(X_scaled, columns=X.columns)
-
-#     X_train, X_test, y_train, y_test = train_test_split(
-#         X, y, test_size=0.2, random_state=42, stratify=y
-#     )
-
-#     smote = SMOTE(random_state=42)
-#     X_train_resampled, y_train_resampled = smote.fit_resample(X_train, y_train)  # type: ignore
-
-#     return X_train_resampled, X_test, y_train_resampled, y_test
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42, stratify=y
+    )
+    return X_train, X_test, y_train, y_test

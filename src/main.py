@@ -1,5 +1,5 @@
 from sklearn.model_selection import train_test_split
-from src.preprocess import load_and_preprocess_data
+from src.preprocess import get_train_test_split
 from src.train import train_model
 from src.evaluate import evaluate_model
 from loguru import logger
@@ -11,12 +11,7 @@ def run_pipeline():
     data_path = "data/creditcard.csv"
 
     logger.info("Step 1: Loading and preprocessing data...")
-    X, y, _ = load_and_preprocess_data(data_path)
-
-    logger.info("Splitting data into training and test sets...")
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42, stratify=y
-    )
+    X_train, X_test, y_train, y_test = get_train_test_split(data_path)
     logger.info("Data successfully split.")
 
     logger.info("\nStep 2: Training the model...")
