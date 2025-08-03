@@ -1,0 +1,12 @@
+2025-08-03 03:12:11.131 | INFO | src.evaluate:evaluate_model:34 - Optimal threshold found: 0.9965
+2025-08-03 03:12:11.132 | INFO | src.evaluate:evaluate_model:39 - Classification Report (at optimal threshold):
+2025-08-03 03:12:11.132 | INFO | src.evaluate:evaluate_model:41 - Classification Report:
+2025-08-03 03:12:11.141 | INFO | src.evaluate:evaluate_model:42 - 
+
+            precision  recall  f1-score  support
+Not Fraud     1.00      1.00    1.00      56864
+Fraud         1.00      0.82    0.90       98
+
+accuracy      1.00                        56962
+macro avg     1.00      0.91     0.95     56962
+weighted avg  1.00      1.00     1.00     56962
